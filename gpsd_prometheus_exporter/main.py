@@ -14,7 +14,7 @@ SAT_COUNT = Gauge("satcount", "Number of satellites")
 
 
 def gps_connect():
-    gpsd.connect()
+    gpsd.connect(host=H, port=P)
     # Get gps position
     data = gpsd.get_current()
     return data
@@ -87,6 +87,18 @@ def make_json():
     "-d",
     is_flag=True,
     help="Turns on more verbose logging, prints output [default: False]",
+)
+@click.option(
+    "-H",
+    default="127.0.0.1",
+    type=str,
+    help="Specify gpsd host address [default: 127.0.0.1]",
+)
+@click.option(
+    "-P",
+    default=2947,
+    type=int,
+    help="Specify gpsd host port [default: 2947]",
 )
 def main(bind, port, debug, speedunit):
 
